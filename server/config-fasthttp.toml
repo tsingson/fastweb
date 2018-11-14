@@ -1,0 +1,14 @@
+[Server]
+		Addr              =":8888"
+		AddrTLS           =""
+		ByteRange         = false
+		CertFile          =""
+		Compress          = true
+		Dir               ="/Users/qinshen/git/g2cn/public"
+		GenerateIndexPages = false
+		KeyFile            =""
+		Vhost             = false
+		ErrorFile           ="/Users/qinshen/git/linksmart/bin/log/error-fasthttp.log"
+		AccessFile          ="/Users/qinshen/git/linksmart/bin/log/access-fasthttp.log"
+
+
