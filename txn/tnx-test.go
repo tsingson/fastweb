@@ -3,10 +3,10 @@ package txn
 import (
 	"github.com/gofrs/uuid"
 	"github.com/sanity-io/litter"
-	"github.com/tsingson/fastweb/utils"
+	"github.com/tsingson/fastx/utils"
 )
 
-func txn_test()  {
+func txn_test() {
 	path, _ := utils.GetCurrentExecDir()
 	tsn, err := NewTxn(path)
 	if err != nil {

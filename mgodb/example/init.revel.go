@@ -5,8 +5,8 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/tsingson/fastweb/mgodb"
 	"github.com/robfig/revel"
+	"github.com/tsingson/fastx/mgodb"
 	"net/url"
 	"time"
 )

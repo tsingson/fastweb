@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gofrs/uuid"
 	"github.com/tsingson/btcutil/base58"
-	"github.com/tsingson/fastweb/guid"
+	"github.com/tsingson/fastx/guid"
 )
 
 type Guid struct {

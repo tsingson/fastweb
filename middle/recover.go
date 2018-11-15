@@ -2,7 +2,7 @@
 package middle
 
 import (
-	"github.com/tsingson/fastweb/utils"
+	"github.com/tsingson/fastx/utils"
 	"github.com/tsingson/phi"
 	"github.com/valyala/fasthttp"
 	"runtime/debug"

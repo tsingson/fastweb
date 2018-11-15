@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/json-iterator/go"
-	"github.com/tsingson/fastweb/utils"
+	"github.com/tsingson/fastx/utils"
 
 	"github.com/valyala/fasthttp"
 )

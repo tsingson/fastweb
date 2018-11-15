@@ -3,7 +3,7 @@ package txn
 import (
 	"errors"
 	"github.com/dgraph-io/badger"
-	"github.com/tsingson/fastweb/utils"
+	"github.com/tsingson/fastx/utils"
 	"time"
 )
 

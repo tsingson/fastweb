@@ -8,7 +8,7 @@ import (
 
 	"github.com/rs/zerolog/diode"
 	"github.com/spf13/afero"
-	"github.com/tsingson/fastweb/utils"
+	"github.com/tsingson/fastx/utils"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 

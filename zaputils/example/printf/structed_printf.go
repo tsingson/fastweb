@@ -3,14 +3,14 @@
 package printf
 
 import (
-	"github.com/tsingson/fastweb/zaputils"
+	"github.com/tsingson/fastx/zaputils"
 )
 
 // AsyncWriteFile 展示了如何使用structured风格写入日志（默认异步写入）。
 func AsyncWriteFile() {
 	logger := zaputils.New(
-		zaputils.WithPath("./async.log"), // 日志写入文件为/tmp/async.log
-		zaputils.WithLevel(zaputils.Error),   // 日志写入级别为Error，此时只有级别大于等于Error级别日志才会被写入
+		zaputils.WithPath("./async.log"),   // 日志写入文件为/tmp/async.log
+		zaputils.WithLevel(zaputils.Error), // 日志写入级别为Error，此时只有级别大于等于Error级别日志才会被写入
 	)
 	// 写入Info级别日志（由于本级别小小于Error级别，此日志不会被写入）
 	logger.Info("some information about LiLei", // 日志主题

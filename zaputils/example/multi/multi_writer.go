@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/tsingson/fastweb/zaputils"
+	"github.com/tsingson/fastx/zaputils"
 )
 
 // defaultLogger 使用vega/log包默认logger输出日志。

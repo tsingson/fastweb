@@ -5,7 +5,7 @@ package simple
 import (
 	"time"
 
-	"github.com/tsingson/fastweb/zaputils"
+	"github.com/tsingson/fastx/zaputils"
 )
 
 func main() {

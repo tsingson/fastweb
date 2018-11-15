@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/diode"
 	"github.com/spf13/afero"
-	"github.com/tsingson/fastweb/utils"
+	"github.com/tsingson/fastx/utils"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -36,7 +36,7 @@ var (
 	LumberLogger *lumberjack.Logger
 )
 
-// 初始化 zero log 日志  
+// 初始化 zero log 日志
 func NewZeroLog(path, logFileNamePrefix string, stdoutFlag bool) zerolog.Logger {
 	var logfilename string
 	dataTimeStr := time.Now().Format(LogFileNameTimeFormat)
