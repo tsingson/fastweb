@@ -1,2 +1,1 @@
-package fastweb
-
+package fastx

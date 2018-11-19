@@ -1,2 +1,3 @@
-# fastweb
-web "famework" base on fasthttp / fasthttprouter 
+# fastx
+
+web "famework" base on fasthttp / fasthttprouter
