@@ -80,14 +80,14 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 		}
 	}()
 	*/
-	log := newZapLogger(true, w)
+	log := newZapLogger(true, false,  w)
 	log.Info("zap logger init succcess")
 
 	return log
 }
 
 // newZapLogger
-func newZapLogger(encodeAsJSON bool, output zapcore.WriteSyncer) *zap.Logger {
+func newZapLogger(encodeAsJSON, callerFlag bool, output zapcore.WriteSyncer) *zap.Logger {
 	encCfg := zapcore.EncoderConfig{
 		TimeKey:        "logtime",
 		LevelKey:       "level",
@@ -101,8 +101,12 @@ func newZapLogger(encodeAsJSON bool, output zapcore.WriteSyncer) *zap.Logger {
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 	}
 
-	opts := []zap.Option{zap.AddCaller()}
-	opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
+	opts := []zap.Option{}
+	if callerFlag {
+		opts = append(opts,  zap.AddCaller())
+		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
+	}
+
 	encoder := zapcore.NewConsoleEncoder(encCfg)
 	if encodeAsJSON {
 		encoder = zapcore.NewJSONEncoder(encCfg)
