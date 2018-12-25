@@ -7,7 +7,8 @@ import (
 	"time"
 )
 
-func fastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
+//
+func FastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
 	// init http client
 	client := &fasthttp.Client{}
 	request := fasthttp.AcquireRequest()
@@ -31,7 +32,7 @@ func fastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
 	return response, nil
 }
 
-func fastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Response, error) {
+func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Response, error) {
 	request := fasthttp.AcquireRequest()
 	request.SetRequestURI(url)
 	//	request.Header.Add("User-Agent", "Test-Agent")
