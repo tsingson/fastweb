@@ -15,7 +15,7 @@ func TestFastGet(t *testing.T) {
 	// Only pass t into top-level Convey calls
 	Convey("test fasthttp client function GET ", t, func() {
 
-		response, err := fastGet("https://httpbin.org/headers", 5*time.Second)
+		response, err := FastGet("https://httpbin.org/headers", 5*time.Second)
 
 		//	var ipbody HttpBinHeaders //{"113.87.14.183"}
 
@@ -29,7 +29,7 @@ func TestFastGet(t *testing.T) {
 func TestFastPost(t *testing.T) {
 	// Only pass t into top-level Convey calls
 	Convey("test fasthttp client function GET ", t, func() {
-		response, err := fastPost("http://httpbin.org/post", []byte("p=q"), 5*time.Second)
+		response, err := FastPost("http://httpbin.org/post", []byte("p=q"), 5*time.Second)
 
 		var ipbody HttpbinPostBody //{"113.87.14.183"}
 

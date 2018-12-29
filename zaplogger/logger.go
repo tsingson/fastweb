@@ -8,9 +8,9 @@ import (
 
 	"github.com/rs/zerolog/diode"
 	"github.com/spf13/afero"
-	"github.com/tsingson/fastx/utils"
-
 	"gopkg.in/natefinch/lumberjack.v2"
+
+	"github.com/tsingson/fastx/utils"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -18,33 +18,49 @@ import (
 
 var (
 	// 	ProxyAddr string
-
 	LumberLogger *lumberjack.Logger
 )
 
 // NewZapLog  initial a zap logger
 func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
-	var logfilename string
-	dataTimeStr := time.Now().Format("2006-01-02-15")
+	var (
+		logfilename string
+		err         error
+	)
+	dataTimeFmtInFileName := time.Now().Format("2006-01-02-15")
+
 	if len(path) == 0 {
 		path, _ = utils.GetCurrentExecDir()
 	}
 
-	logpath := path + "/" // + dataTimeStr
+	logpath := path + "/" // + dataTimeFmtInFileName
+	errLogPath := path + "/err/"
 	//
 	afs := afero.NewOsFs()
 	check, _ := afero.DirExists(afs, logpath)
 	if !check {
-		afs.MkdirAll(logpath, 0755)
+		err = afs.MkdirAll(logpath, 0755)
+		if err != nil {
+
+		}
+	}
+
+	check, _ = afero.DirExists(afs, errLogPath)
+	if !check {
+		err = afs.MkdirAll(errLogPath, 0755)
+		if err != nil {
+
+		}
 	}
 
 	if len(logFileNamePrefix) == 0 {
-		// 	logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeStr + ".zlog"
-		logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeStr + ".zlog"
+		// 	logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
+		logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
 
 	} else {
-		// 	logfilename = logpath + "/" + logFileNamePrefix + "-pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeStr + ".zlog"
-		logfilename = logpath + "/" + logFileNamePrefix + dataTimeStr + ".zlog"
+		// 	logfilename = logpath + "/" + logFileNamePrefix + "-pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
+		logfilename = logpath + "/" + logFileNamePrefix + "-" + dataTimeFmtInFileName + ".zlog"
+
 	}
 
 	LumberLogger = &lumberjack.Logger{
@@ -68,26 +84,26 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 		w = zapcore.NewMultiWriteSyncer(zapcore.AddSync(wdiode))
 	}
 
-	// -------------------------------------
-	/**
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGHUP)
-
-	go func() {
-		for {
-			<-c
-			LumberLogger.Rotate()
-		}
-	}()
-	*/
-	log := newZapLogger(true, false,  w)
+	log := newZapLogger(true, false, zapcore.ErrorLevel, w)
 	log.Info("zap logger init succcess")
 
 	return log
 }
 
 // newZapLogger
-func newZapLogger(encodeAsJSON, callerFlag bool, output zapcore.WriteSyncer) *zap.Logger {
+func newZapLogger(encodeAsJSON, callerFlag bool, level zapcore.Level, output zapcore.WriteSyncer) *zap.Logger {
+	opts := []zap.Option{}
+	if callerFlag {
+		opts = append(opts, zap.AddCaller())
+		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
+	}
+	return zap.New(newZapCore(encodeAsJSON, callerFlag, level, output ), opts...)
+}
+
+// newZapLogger
+func newZapCore(encodeAsJSON, callerFlag bool, level zapcore.Level, output zapcore.WriteSyncer) zapcore.Core {
+	var encoder zapcore.Encoder
+
 	encCfg := zapcore.EncoderConfig{
 		TimeKey:        "logtime",
 		LevelKey:       "level",
@@ -103,14 +119,14 @@ func newZapLogger(encodeAsJSON, callerFlag bool, output zapcore.WriteSyncer) *za
 
 	opts := []zap.Option{}
 	if callerFlag {
-		opts = append(opts,  zap.AddCaller())
+		opts = append(opts, zap.AddCaller())
 		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
 	}
 
-	encoder := zapcore.NewConsoleEncoder(encCfg)
 	if encodeAsJSON {
 		encoder = zapcore.NewJSONEncoder(encCfg)
 	}
+	encoder = zapcore.NewConsoleEncoder(encCfg)
 
-	return zap.New(zapcore.NewCore(encoder, output, zap.NewAtomicLevelAt(zap.DebugLevel)), opts...)
+	return zapcore.NewCore(encoder, output, zap.NewAtomicLevelAt(level)
 }
