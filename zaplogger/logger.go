@@ -97,7 +97,7 @@ func newZapLogger(encodeAsJSON, callerFlag bool, level zapcore.Level, output zap
 		opts = append(opts, zap.AddCaller())
 		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
 	}
-	return zap.New(newZapCore(encodeAsJSON, callerFlag, level, output ), opts...)
+	return zap.New(newZapCore(encodeAsJSON, callerFlag, level, output), opts...)
 }
 
 // newZapLogger
