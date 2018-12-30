@@ -23,10 +23,7 @@ var (
 
 // NewZapLog  initial a zap logger
 func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
-	var (
-		logfilename string
-		err         error
-	)
+
 	dataTimeFmtInFileName := time.Now().Format("2006-01-02-15")
 
 	if len(path) == 0 {
@@ -39,7 +36,8 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 	afs := afero.NewOsFs()
 	check, _ := afero.DirExists(afs, logpath)
 	if !check {
-		err = afs.MkdirAll(logpath, 0755)
+
+		err := afs.MkdirAll(logpath, 0755)
 		if err != nil {
 
 		}
@@ -47,12 +45,13 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 
 	check, _ = afero.DirExists(afs, errLogPath)
 	if !check {
-		err = afs.MkdirAll(errLogPath, 0755)
+		err := afs.MkdirAll(errLogPath, 0755)
 		if err != nil {
 
 		}
 	}
 
+	var logfilename string
 	if len(logFileNamePrefix) == 0 {
 		// 	logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
 		logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
@@ -97,14 +96,14 @@ func newZapLogger(encodeAsJSON, callerFlag bool, level zapcore.Level, output zap
 		opts = append(opts, zap.AddCaller())
 		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
 	}
-	return zap.New(newZapCore(encodeAsJSON, callerFlag, level, output), opts...)
+	return zap.New(newZapCore(encodeAsJSON, level, output), opts...)
+
 }
 
 // newZapLogger
-func newZapCore(encodeAsJSON, callerFlag bool, level zapcore.Level, output zapcore.WriteSyncer) zapcore.Core {
-	var encoder zapcore.Encoder
+func newZapCore(jsonFlag bool, level zapcore.Level, output zapcore.WriteSyncer) zapcore.Core {
 
-	encCfg := zapcore.EncoderConfig{
+	cfg := zapcore.EncoderConfig{
 		TimeKey:        "logtime",
 		LevelKey:       "level",
 		NameKey:        "logger",
@@ -117,16 +116,11 @@ func newZapCore(encodeAsJSON, callerFlag bool, level zapcore.Level, output zapco
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 	}
 
-	opts := []zap.Option{}
-	if callerFlag {
-		opts = append(opts, zap.AddCaller())
-		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
+	var encoder zapcore.Encoder //
+	if jsonFlag {
+		encoder = zapcore.NewJSONEncoder(cfg)
 	}
+	encoder = zapcore.NewConsoleEncoder(cfg)
 
-	if encodeAsJSON {
-		encoder = zapcore.NewJSONEncoder(encCfg)
-	}
-	encoder = zapcore.NewConsoleEncoder(encCfg)
-
-	return zapcore.NewCore(encoder, output, zap.NewAtomicLevelAt(level)
+	return zapcore.NewCore(encoder, output, zap.NewAtomicLevelAt(level))
 }
