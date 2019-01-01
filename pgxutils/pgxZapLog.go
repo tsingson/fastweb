@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	//PgxMaxConnect = 5
+//PgxMaxConnect = 5
 )
 
 type (

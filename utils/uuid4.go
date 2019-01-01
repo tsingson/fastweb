@@ -8,7 +8,7 @@ import (
 )
 
 func Uuid4() string {
-	uu, err1  := uuid.NewV4()
+	uu, err1 := uuid.NewV4()
 	if err1 != nil {
 
 	}

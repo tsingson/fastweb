@@ -50,7 +50,7 @@ func FastHttpZeroLogHandler(next phi.HandlerFunc) phi.HandlerFunc {
 }
 
 // NewFastHTTPLoggerAdapter create new *FastHTTPLoggerAdapter
-func NewFastHTTPLoggerAdapter(log zerolog.Logger)  *FastHTTPLoggerAdapter {
+func NewFastHTTPLoggerAdapter(log zerolog.Logger) *FastHTTPLoggerAdapter {
 
 	return &FastHTTPLoggerAdapter{
 		zlog: log,

@@ -23,6 +23,7 @@ func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 func milliSecondsDurationEncoder(d time.Duration, enc zapcore.PrimitiveArrayEncoder) {
 	enc.AppendFloat64(float64(d) / float64(time.Millisecond))
 }
+
 // newLoggerConfig
 func newLoggerConfig(debugLevel bool, te zapcore.TimeEncoder, de zapcore.DurationEncoder) (loggerConfig zap.Config) {
 	loggerConfig = zap.NewProductionConfig()

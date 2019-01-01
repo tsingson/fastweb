@@ -2,9 +2,9 @@ package fasturl
 
 import (
 	//	"github.com/json-iterator/go"
-	"github.com/valyala/fasthttp"
 	"bytes"
 	"fmt"
+	"github.com/valyala/fasthttp"
 	"io"
 	"io/ioutil"
 	"log"
@@ -67,7 +67,6 @@ func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Respons
 
 }
 
-
 func hostClient() {
 	// Perpare a client, which fetches webpages via HTTP proxy listening
 	// on the localhost:8080.
@@ -100,7 +99,6 @@ func useResponseBody(body []byte) {
 	// Do something with body :)
 	println(string(body))
 }
-
 
 //PostFile 上传文件
 func PostFile(fieldname, filename, uri string) ([]byte, error) {
@@ -173,6 +171,5 @@ func PostMultipartForm(fields []MultipartFormField, uri string) (respBody []byte
 	respBody, err = ioutil.ReadAll(resp.Body)
 	return
 }
-
 
 // design and code by tsingson
