@@ -25,7 +25,6 @@ require (
 	github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7 // indirect
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/NetWatcher/service v0.0.0-20170526123706-12236803cddf
-	github.com/agtorre/gocolorize v1.0.0 // indirect
 	github.com/bsm/go-guid v1.0.0
 	github.com/btcsuite/btcutil v0.0.0-20180706230648-ab6388e0c60a
 	github.com/cockroachdb/apd v1.1.0 // indirect
@@ -38,9 +37,7 @@ require (
 	github.com/gin-gonic/gin v1.3.0
 	github.com/gofrs/uuid v3.1.0+incompatible
 	github.com/google/uuid v1.0.0 // indirect
-	github.com/gronpipmaster/mgodb v0.0.0-20150303183006-591245875616
 	github.com/guelfey/go.dbus v0.0.0-20131113121618-f6a3a2366cc3 // indirect
-	github.com/howeyc/fsnotify v0.9.0 // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.2.0+incompatible
 	github.com/json-iterator/go v1.1.5
@@ -55,9 +52,6 @@ require (
 	github.com/onsi/gomega v1.4.2
 	github.com/parnurzeal/gorequest v0.2.15
 	github.com/pkg/errors v0.8.0
-	github.com/robfig/config v0.0.0-20141207224736-0f78529c8c7e // indirect
-	github.com/robfig/pathtree v0.0.0-20140121041023-41257a1839e9 // indirect
-	github.com/robfig/revel v0.0.0-20140226070238-e8aac16df9e9
 	github.com/rs/zerolog v1.10.3
 	github.com/sanity-io/litter v1.1.0
 	github.com/satori/go.uuid v1.2.0 // indirect
@@ -66,7 +60,6 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20181108003508-044398e4856c
 	github.com/spf13/afero v1.1.2
 	github.com/spf13/cast v1.3.0
-	github.com/streadway/simpleuuid v0.0.0-20130420165545-6617b501e485 // indirect
 	github.com/stretchr/testify v1.2.2
 	github.com/tsingson/btcutil v0.0.0-20181003034133-6de6be366b82
 	github.com/tsingson/chardet v0.0.0-20180515175526-60fc302f5592
