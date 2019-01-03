@@ -1,4 +1,4 @@
-package filex 
+package filex
 
 import (
 	"bufio"
@@ -19,31 +19,15 @@ import (
 const bufferSize = 65536
 
 func Exists(name string) bool {
-	/**
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
-	*/
 	afs := afero.NewOsFs()
 	b, e := afero.Exists(afs, name)
 	if e != nil {
 		return false
 	}
 	return b
-
 }
+
 func DirExists(name string) bool {
-	/**
-	if _, err := os.Stat(name); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
-	*/
 	afs := afero.NewOsFs()
 	b, e := afero.DirExists(afs, name)
 	if e != nil {

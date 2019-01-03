@@ -1,4 +1,4 @@
-package filex 
+package filex
 
 import (
 	"crypto/sha256"
