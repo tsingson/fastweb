@@ -2,11 +2,15 @@ package utils
 
 import (
 	"bytes"
+	"errors"
+	"io/ioutil"
+
+	"github.com/rs/zerolog"
+
 	"github.com/tsingson/chardet"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/encoding/traditionalchinese"
 	"golang.org/x/text/transform"
-	"io/ioutil"
 )
 
 func Detect(b []byte) (*chardet.Result, error) {
@@ -46,4 +50,41 @@ func Encodebig5(s []byte) ([]byte, error) {
 		return nil, e
 	}
 	return d, nil
+}
+
+// Trans  translate  code to simplechinese
+func Trans(input []byte, log zerolog.Logger) (output []byte, err error) {
+
+	var code *chardet.Result
+
+	code, err = Detect(input)
+	if err != nil {
+		log.Error().Err(err).Msg("ioutil ReadAll error")
+		return nil, err
+	}
+
+	switch code.Charset {
+	case "GB-18030":
+		output, err = Decodegbk(input)
+		if err != nil {
+			log.Error().Err(err).Msg("Error")
+			//	return output, err
+		}
+		break
+	case "Big5":
+		output, err = Decodebig5(input)
+		if err != nil {
+			log.Error().Err(err).Msg("Error")
+			//	return output, err
+		}
+		break
+	case "UTF-8":
+		output = input
+		//return output, nil
+		break
+	default:
+		err = errors.New("unknow code type")
+	}
+	return output, err
+
 }
