@@ -1,7 +1,7 @@
 package fasturl
 
 import (
-	//	"github.com/json-iterator/go"
+	// 	"github.com/json-iterator/go"
 	"bytes"
 	"fmt"
 	"github.com/valyala/fasthttp"
@@ -14,17 +14,17 @@ import (
 	"time"
 )
 
-//
+// FastGet
 func FastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
 	// init http client
 	client := &fasthttp.Client{}
 	request := fasthttp.AcquireRequest()
 	response := fasthttp.AcquireResponse()
 
-	//defer fasthttp.ReleaseRequest(request)
-	//	defer fasthttp.ReleaseResponse(response)
+	// defer fasthttp.ReleaseRequest(request)
+	// 	defer fasthttp.ReleaseResponse(response)
 
-	//	request.SetConnectionClose()
+	// 	request.SetConnectionClose()
 	request.SetRequestURI(url)
 	request.Header.Add("Accept", "application/json")
 
@@ -33,40 +33,67 @@ func FastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	//	fmt.Println(string(response.Header.Header()))
-	//	fmt.Println(string(response.Body()))
+	// 	fmt.Println(string(response.Header.Header()))
+	// 	fmt.Println(string(response.Body()))
 
 	return response, nil
 }
 
+// FastPost
 func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Response, error) {
-	request := fasthttp.AcquireRequest()
-	request.SetRequestURI(url)
-	//	request.Header.Add("User-Agent", "Test-Agent")
-	request.Header.Add("Accept", "application/json")
+	req := fasthttp.AcquireRequest()
+	req.SetRequestURI(url)
+	// 	req.Header.Add("User-Agent", "Test-Agent")
+	req.Header.Add("Accept", "application/json")
 
 	// GET http://127.0.0.1:61765 HTTP/1.1
 	// User-Agent: fasthttp
 	// User-Agent: Test-Agent
 
-	request.Header.SetMethod("POST")
-	request.SetBody(body)
+	req.Header.SetMethod("POST")
+	req.SetBody(body)
 
-	responce := fasthttp.AcquireResponse()
+	resp := fasthttp.AcquireResponse()
 	client := &fasthttp.Client{}
 
-	err := client.DoTimeout(request, responce, timeOut)
+	err := client.DoTimeout(req, resp, timeOut)
 
 	if err != nil {
-		//println("Error:", err.Error())
+		// println("Error:", err.Error())
 		return nil, err
 	}
-	return responce, nil
-	//bodyBytes := resp.Body()
-	//	println(string(bodyBytes))
+	return resp, nil
+	// bodyBytes := resp.Body()
+	// 	println(string(bodyBytes))
 
 }
 
+// PostString
+func FastPostString(url string, body string, timeOut time.Duration) (*fasthttp.Response, error) {
+	req := fasthttp.AcquireRequest()
+	req.SetRequestURI(url)
+	req.Header.Add("User-Agent", "Test-Agent")
+	req.Header.Add("Accept", "application/json")
+
+	req.Header.SetMethod("POST")
+	req.SetBodyString(body)
+
+	resp := fasthttp.AcquireResponse()
+	client := &fasthttp.Client{}
+
+	err := client.DoTimeout(req, resp, timeOut)
+
+	if err != nil {
+		// println("Error:", err.Error())
+		return nil, err
+	}
+	return resp, nil
+	// bodyBytes := resp.Body()
+	// 	println(string(bodyBytes))
+
+}
+
+// hostClient
 func hostClient() {
 	// Perpare a client, which fetches webpages via HTTP proxy listening
 	// on the localhost:8080.
@@ -95,12 +122,13 @@ func hostClient() {
 	useResponseBody(body)
 }
 
+// useResponseBody
 func useResponseBody(body []byte) {
 	// Do something with body :)
 	println(string(body))
 }
 
-//PostFile 上传文件
+// PostFile 上传文件
 func PostFile(fieldname, filename, uri string) ([]byte, error) {
 	fields := []MultipartFormField{
 		{
@@ -112,7 +140,7 @@ func PostFile(fieldname, filename, uri string) ([]byte, error) {
 	return PostMultipartForm(fields, uri)
 }
 
-//MultipartFormField 保存文件或其他字段信息
+// MultipartFormField 保存文件或其他字段信息
 type MultipartFormField struct {
 	IsFile    bool
 	Fieldname string
@@ -120,7 +148,7 @@ type MultipartFormField struct {
 	Filename  string
 }
 
-//PostMultipartForm 上传文件或其他多个字段
+// PostMultipartForm 上传文件或其他多个字段
 func PostMultipartForm(fields []MultipartFormField, uri string) (respBody []byte, err error) {
 	bodyBuf := &bytes.Buffer{}
 	bodyWriter := multipart.NewWriter(bodyBuf)
