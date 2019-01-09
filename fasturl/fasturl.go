@@ -43,6 +43,7 @@ func FastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
 func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Response, error) {
 	req := fasthttp.AcquireRequest()
 	req.SetRequestURI(url)
+	req.Header.SetContentType("application/json; charset=utf-8")
 	// 	req.Header.Add("User-Agent", "Test-Agent")
 	req.Header.Add("Accept", "application/json")
 
@@ -72,8 +73,10 @@ func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Respons
 func FastPostString(url string, body string, timeOut time.Duration) (*fasthttp.Response, error) {
 	req := fasthttp.AcquireRequest()
 	req.SetRequestURI(url)
+	req.Header.SetContentType("application/json; charset=utf-8")
 	req.Header.Add("User-Agent", "Test-Agent")
 	req.Header.Add("Accept", "application/json")
+
 
 	req.Header.SetMethod("POST")
 	req.SetBodyString(body)
