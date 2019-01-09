@@ -67,7 +67,7 @@ require (
 	github.com/tsingson/phi v0.0.0-20181110003240-9b36c9a5a59c
 	github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0
-	github.com/valyala/fasthttp v1.0.0
+	github.com/valyala/fasthttp v1.1.0
 	github.com/vektra/tachyon v0.0.0-20150921164542-0da4f3861aef // indirect
 	go.uber.org/atomic v1.3.2 // indirect
 	go.uber.org/multierr v1.1.0 // indirect

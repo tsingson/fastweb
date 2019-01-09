@@ -86,7 +86,7 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 		level = zapcore.ErrorLevel
 	}
 
-	log := newZapLogger(true, false, level , w)
+	log := newZapLogger(true, false, level, w)
 	log.Info("zap logger init succcess")
 
 	return log
