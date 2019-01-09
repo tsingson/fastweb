@@ -72,6 +72,8 @@ github.com/kardianos/osext v0.0.0-20170510131534-ae77be60afb1 h1:PJPDf8OUfOK1bb/
 github.com/kardianos/osext v0.0.0-20170510131534-ae77be60afb1/go.mod h1:1NbS8ALrpOvjt0rHPNLyCIeMtbizbir8U//inJ+zuB8=
 github.com/kardianos/service v0.0.0-20181115005516-4c239ee84e7b h1:vfiqKno48aUndBMjTeWFpCExNnTf2Xnd6d228L4EfTQ=
 github.com/kardianos/service v0.0.0-20181115005516-4c239ee84e7b/go.mod h1:10UU/bEkzh2iEN6aYzbevY7J6p03KO5siTxQWXMEerg=
+github.com/karrick/godirwalk v1.7.7 h1:lLkPCA+C0u1pI4fLFseaupvh5/THlPJIqSPmnGGViKs=
+github.com/karrick/godirwalk v1.7.7/go.mod h1:2c9FRhkDxdIbgkOnCEvnSWs71Bhugbl46shStcFDJ34=
 github.com/klauspost/compress v1.4.0 h1:8nsMz3tWa9SWWPL60G1V6CUsf4lLjWLTNEtibhe8gh8=
 github.com/klauspost/compress v1.4.0/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/klauspost/cpuid v0.0.0-20180405133222-e7e905edc00e h1:+lIPJOWl+jSiJOc70QXJ07+2eg2Jy2EC7Mi11BWujeM=

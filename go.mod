@@ -43,6 +43,7 @@ require (
 	github.com/json-iterator/go v1.1.5
 	github.com/kardianos/osext v0.0.0-20170510131534-ae77be60afb1 // indirect
 	github.com/kardianos/service v0.0.0-20181115005516-4c239ee84e7b // indirect
+	github.com/karrick/godirwalk v1.7.7
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/mholt/caddy v0.11.1
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

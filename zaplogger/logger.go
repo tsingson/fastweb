@@ -77,13 +77,16 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 	// lumberjack.Logger is already safe for concurrent use, so we don't need to
 	// lock it.
 	var w zapcore.WriteSyncer
+	var level zapcore.Level
 	if stdoutFlag {
 		w = zapcore.NewMultiWriteSyncer(zapcore.AddSync(wdiode), zapcore.AddSync(os.Stdout))
+		level = zapcore.InfoLevel
 	} else {
 		w = zapcore.NewMultiWriteSyncer(zapcore.AddSync(wdiode))
+		level = zapcore.ErrorLevel
 	}
 
-	log := newZapLogger(true, false, zapcore.ErrorLevel, w)
+	log := newZapLogger(true, false, level , w)
 	log.Info("zap logger init succcess")
 
 	return log
