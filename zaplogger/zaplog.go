@@ -1,5 +1,5 @@
 package zaplogger
-
+/**
 import (
 	"runtime"
 	"strings"
@@ -89,3 +89,4 @@ func NewNormalLoggers(debugLevel bool) (logger, noCallerLogger *zap.Logger) {
 	}
 	return
 }
+*/

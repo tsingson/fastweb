@@ -1,5 +1,5 @@
 package zaplogger
-
+/**
 import (
 	"bytes"
 	"log"
@@ -31,3 +31,4 @@ func (w logWriter) Write(p []byte) (n int, err error) {
 	err = nil
 	return
 }
+*/
