@@ -16,54 +16,51 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var (
-	// 	ProxyAddr string
-	LumberLogger *lumberjack.Logger
-)
+// NewZapLog  init a log
+func NewZapLog(path, prefix string, stdoutFlag bool) *zap.Logger {
+
+	opts := []zap.Option{}
+
+	if stdoutFlag {
+		opts = append(opts, zap.AddCaller())
+		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
+
+		std := NewStdoutCore(zapcore.DebugLevel)
+		debug := NewZapCore(path, prefix, zapcore.ErrorLevel)
+
+		return zap.New(zapcore.NewTee(std, debug), opts...)
+	} else {
+		errlog := NewZapCore(path, prefix, zapcore.ErrorLevel)
+		return zap.New(errlog)
+	}
+
+}
 
 // NewZapLog  initial a zap logger
-func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
+func NewZapCore(path, prefix string, level zapcore.Level) zapcore.Core {
 
 	dataTimeFmtInFileName := time.Now().Format("2006-01-02-15")
+	var err error
+	var logPath string
 
-	if len(path) == 0 {
-		path, _ = utils.GetCurrentExecDir()
+	logPath, err = buildLogPath(path)
+	if err != nil {
+		// TODO: handle error
 	}
 
-	logpath := path + "/" // + dataTimeFmtInFileName
-	errLogPath := path + "/err/"
-	//
-	afs := afero.NewOsFs()
-	check, _ := afero.DirExists(afs, logpath)
-	if !check {
-
-		err := afs.MkdirAll(logpath, 0755)
-		if err != nil {
-
-		}
-	}
-
-	check, _ = afero.DirExists(afs, errLogPath)
-	if !check {
-		err := afs.MkdirAll(errLogPath, 0755)
-		if err != nil {
-
-		}
-	}
-
-	var logfilename string
-	if len(logFileNamePrefix) == 0 {
-		// 	logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
-		logfilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
+	var logFilename string
+	if len(prefix) == 0 {
+		// 	logFilename = logpath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
+		logFilename = logPath + "/pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
 
 	} else {
-		// 	logfilename = logpath + "/" + logFileNamePrefix + "-pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
-		logfilename = logpath + "/" + logFileNamePrefix + "-" + dataTimeFmtInFileName + ".zlog"
+		// 	logFilename = logpath + "/" + prefix + "-pid-" + strconv.Itoa(os.Getpid()) + "-" + dataTimeFmtInFileName + ".zlog"
+		logFilename = logPath + "/" + prefix + "-" + dataTimeFmtInFileName + ".zlog"
 
 	}
-
+	var LumberLogger *lumberjack.Logger
 	LumberLogger = &lumberjack.Logger{
-		Filename:   logfilename,
+		Filename:   logFilename,
 		MaxSize:    10, // megabytes
 		MaxBackups: 31,
 		MaxAge:     31,    // days
@@ -77,30 +74,18 @@ func NewZapLog(path, logFileNamePrefix string, stdoutFlag bool) *zap.Logger {
 	// lumberjack.Logger is already safe for concurrent use, so we don't need to
 	// lock it.
 	var w zapcore.WriteSyncer
-	var level zapcore.Level
-	if stdoutFlag {
-		w = zapcore.NewMultiWriteSyncer(zapcore.AddSync(wdiode), zapcore.AddSync(os.Stdout))
-		level = zapcore.InfoLevel
-	} else {
-		w = zapcore.NewMultiWriteSyncer(zapcore.AddSync(wdiode))
-		level = zapcore.ErrorLevel
-	}
+	w = zapcore.AddSync(wdiode)
 
-	log := newZapLogger(true, false, level, w)
-	log.Info("zap logger init succcess")
+	return newZapCore(true, level, w)
 
-	return log
 }
 
-// newZapLogger
-func newZapLogger(encodeAsJSON, callerFlag bool, level zapcore.Level, output zapcore.WriteSyncer) *zap.Logger {
-	opts := []zap.Option{}
-	if callerFlag {
-		opts = append(opts, zap.AddCaller())
-		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
-	}
-	return zap.New(newZapCore(encodeAsJSON, level, output), opts...)
+func NewStdoutCore(level zapcore.Level) zapcore.Core {
+	var w zapcore.WriteSyncer
 
+	w = zapcore.AddSync(os.Stdout)
+
+	return newZapCore(true, level, w)
 }
 
 // newZapLogger
@@ -122,8 +107,36 @@ func newZapCore(jsonFlag bool, level zapcore.Level, output zapcore.WriteSyncer) 
 	var encoder zapcore.Encoder //
 	if jsonFlag {
 		encoder = zapcore.NewJSONEncoder(cfg)
+	} else {
+		encoder = zapcore.NewConsoleEncoder(cfg)
 	}
-	encoder = zapcore.NewConsoleEncoder(cfg)
 
 	return zapcore.NewCore(encoder, output, zap.NewAtomicLevelAt(level))
+}
+
+// buildLogPath
+func buildLogPath(path string) (logPath string, err error) {
+	if len(path) == 0 {
+		path, _ = utils.GetCurrentExecDir()
+	}
+	logPath = path + "/"
+
+	afs := afero.NewOsFs()
+	check, _ := afero.DirExists(afs, logPath)
+	if !check {
+		err := afs.MkdirAll(logPath, 0755)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	tf := logPath + "test.log"
+	err = afero.WriteFile(afs, tf, []byte("file b"), 0644)
+	if err != nil {
+		return "", err
+	} else {
+		afs.Remove(tf)
+	}
+
+	return logPath, nil
 }

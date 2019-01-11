@@ -8,7 +8,7 @@ import (
 )
 
 const (
-//PgxMaxConnect = 5
+// PgxMaxConnect = 5
 )
 
 type (
@@ -23,28 +23,23 @@ type (
 )
 
 func NewPgxPoolAfterConnectZap(config *PostgresZapConfig, afterConnectMap func(*pgx.Conn) error, debug bool) (*pgx.ConnPool, error) {
-	// logger := zerologadapter.NewLogger(log)
 
 	var pgxConfig pgx.ConnConfig
 
+	pgxConfig = pgx.ConnConfig{
+		Host:     config.Host,
+		User:     config.User,
+		Password: config.Password,
+		Database: config.Database,
+		Logger:   config.Logger,
+		LogLevel: pgx.LogLevelDebug, // pgx.LogLevelInfo,pgx.LogLevelInfo, // pgx.LogLevelError,
+	}
 	if debug {
-		pgxConfig = pgx.ConnConfig{
-			Host:     config.Host,
-			User:     config.User,
-			Password: config.Password,
-			Database: config.Database,
-			Logger:   config.Logger,
-			LogLevel: pgx.LogLevelDebug, // pgx.LogLevelInfo,pgx.LogLevelInfo, // pgx.LogLevelError,
-		}
+		pgxConfig.LogLevel = pgx.LogLevelDebug
+
 	} else {
-		pgxConfig = pgx.ConnConfig{
-			Host:     config.Host,
-			User:     config.User,
-			Password: config.Password,
-			Database: config.Database,
-			Logger:   config.Logger,
-			LogLevel: pgx.LogLevelError, // pgx.LogLevelInfo,pgx.LogLevelInfo, // pgx.LogLevelError,
-		}
+		pgxConfig.LogLevel = pgx.LogLevelError
+
 	}
 
 	connPoolConfig := pgx.ConnPoolConfig{
@@ -73,36 +68,3 @@ func NewPgxPool(config *PostgresConfig) (*pgx.ConnPool, error) {
 	}
 	return pgx.NewConnPool(connPoolConfig)
 }
-
-/**
-
-// Field is ignored by this package.
-Field int `json:"-"`
-
-// Field appears in JSON as key "myName".
-Field int `json:"myName"`
-
-// Field appears in JSON as key "myName" and
-// the field is omitted from the object if its value is empty,
-// as defined above.
-Field int `json:"myName,omitempty"`
-
-// Field appears in JSON as key "Field" (the default), but
-// the field is skipped if empty.
-// Note the leading comma.
-Field int `json:",omitempty"`
-*/
-
-/**
-
-conn, err := pool.Acquire()
-if err != nil {
-	return err
-}
-
-_, err = conn.SetLogLevel(pgx.LogLevelTrace)
-if err != nil {
-	return err
-}
-
-*/

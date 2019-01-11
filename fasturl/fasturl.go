@@ -77,7 +77,6 @@ func FastPostString(url string, body string, timeOut time.Duration) (*fasthttp.R
 	req.Header.Add("User-Agent", "Test-Agent")
 	req.Header.Add("Accept", "application/json")
 
-
 	req.Header.SetMethod("POST")
 	req.SetBodyString(body)
 

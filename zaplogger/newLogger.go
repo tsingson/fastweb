@@ -24,8 +24,8 @@ func milliSecondsDurationEncoder(d time.Duration, enc zapcore.PrimitiveArrayEnco
 	enc.AppendFloat64(float64(d) / float64(time.Millisecond))
 }
 
-// newLoggerConfig
-func newLoggerConfig(debugLevel bool, te zapcore.TimeEncoder, de zapcore.DurationEncoder) (loggerConfig zap.Config) {
+// newZapConfig
+func newZapConfig(debugLevel bool, te zapcore.TimeEncoder, de zapcore.DurationEncoder) (loggerConfig zap.Config) {
 	loggerConfig = zap.NewProductionConfig()
 	if te == nil {
 		loggerConfig.EncoderConfig.EncodeTime = timeEncoder
@@ -46,44 +46,8 @@ func newLoggerConfig(debugLevel bool, te zapcore.TimeEncoder, de zapcore.Duratio
 
 // NewLogger return a normal logger
 func NewLogger(debugLevel bool) (logger *zap.Logger) {
-	loggerConfig := newLoggerConfig(debugLevel, nil, nil)
+	loggerConfig := newZapConfig(debugLevel, nil, nil)
 	logger, err := loggerConfig.Build()
-	if err != nil {
-		panic(err)
-	}
-	return
-}
-
-// NewCustomLogger return a normal logger with given timeEncoder
-func NewCustomLogger(debugLevel bool, te zapcore.TimeEncoder, de zapcore.DurationEncoder) (logger *zap.Logger) {
-	loggerConfig := newLoggerConfig(debugLevel, te, de)
-	logger, err := loggerConfig.Build()
-	if err != nil {
-		panic(err)
-	}
-	return
-}
-
-// NewNoCallerLogger return a no caller key value, will be faster
-func NewNoCallerLogger(debugLevel bool) (noCallerLogger *zap.Logger) {
-	loggerConfig := newLoggerConfig(debugLevel, nil, nil)
-	loggerConfig.DisableCaller = true
-	noCallerLogger, err := loggerConfig.Build()
-	if err != nil {
-		panic(err)
-	}
-	return
-}
-
-// NewNormalLoggers is a shortcut to get normal logger, noCallerLogger.
-func NewNormalLoggers(debugLevel bool) (logger, noCallerLogger *zap.Logger) {
-	loggerConfig := newLoggerConfig(debugLevel, nil, nil)
-	logger, err := loggerConfig.Build()
-	if err != nil {
-		panic(err)
-	}
-	loggerConfig.DisableCaller = true
-	noCallerLogger, err = loggerConfig.Build()
 	if err != nil {
 		panic(err)
 	}
