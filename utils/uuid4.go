@@ -3,7 +3,7 @@ package utils
 import (
 	"encoding/hex"
 	"github.com/btcsuite/btcutil/base58"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 	//"github.com/tsingson/btcutil/base58"
 )
 

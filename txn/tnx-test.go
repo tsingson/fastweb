@@ -1,7 +1,7 @@
 package txn
 
 import (
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 	"github.com/sanity-io/litter"
 	"github.com/tsingson/fastx/utils"
 )

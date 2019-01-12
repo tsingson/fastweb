@@ -3,7 +3,7 @@ package utils
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 	"github.com/tsingson/btcutil/base58"
 	"github.com/tsingson/fastx/guid"
 )
