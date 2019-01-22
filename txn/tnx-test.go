@@ -1,9 +1,9 @@
 package txn
 
 import (
-	"github.com/google/uuid"
 	"github.com/sanity-io/litter"
 	"github.com/tsingson/fastx/utils"
+	"github.com/tsingson/uuid"
 )
 
 func txn_test() {

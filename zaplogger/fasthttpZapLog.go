@@ -15,7 +15,7 @@ import (
 // it implements Print() Println() Printf() Dbug() Debugln() Debugf() Info() Infoln() Infof() Warn() Warnln() Warnf()
 // Error() Errorln() Errorf() Fatal() Fataln() Fatalf() Panic() Panicln() Panicf() With() WithField() WithFields()
 type ZapLogger struct {
-	zlog *zap.Logger
+	Log *zap.Logger
 }
 
 // InitZaplogger
@@ -32,7 +32,7 @@ func NewZapLogger(debugLevel bool) *ZapLogger {
 
 // Printf logs a message at level Info on the ZapLogger.
 func (l *ZapLogger) Printf(format string, args ...interface{}) {
-	l.zlog.Info(fmt.Sprintf(format, args...))
+	l.Log.Info(fmt.Sprintf(format, args...))
 }
 
 // FastHttpZapLogHandler
@@ -51,7 +51,7 @@ func (l *ZapLogger) FastHttpZapLogHandler(next phi.HandlerFunc) phi.HandlerFunc 
 		}
 
 		if ctx.Response.StatusCode() < 400 {
-			l.zlog.Info("access",
+			l.Log.Info("access",
 				zap.Int("code", ctx.Response.StatusCode()),
 				zap.Duration("time", time.Since(startTime)),
 				zap.ByteString("method", ctx.Method()),
@@ -60,7 +60,7 @@ func (l *ZapLogger) FastHttpZapLogHandler(next phi.HandlerFunc) phi.HandlerFunc 
 				zap.ByteString("req", ctx.RequestURI()),
 				addrField)
 		} else {
-			l.zlog.Warn("access",
+			l.Log.Warn("access",
 				zap.Int("code", ctx.Response.StatusCode()),
 				zap.Duration("time", time.Since(startTime)),
 				zap.ByteString("method", ctx.Method()),

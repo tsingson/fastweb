@@ -125,8 +125,12 @@ github.com/tsingson/btcutil v0.0.0-20181003034133-6de6be366b82 h1:4tUDUvfB59gm2Z
 github.com/tsingson/btcutil v0.0.0-20181003034133-6de6be366b82/go.mod h1:tjo0xMK+F5SZu3UgvO+JseyBTkl2N0gFkdEyHY6s9Z8=
 github.com/tsingson/chardet v0.0.0-20180515175526-60fc302f5592 h1:hU81gIhOvPPE9DOOc60PILkzy9t8AzRVXOhZ/tSObf8=
 github.com/tsingson/chardet v0.0.0-20180515175526-60fc302f5592/go.mod h1:Bz1a1mvURq6Tu3bSlhr0jzy1neUs4v1UG5/9nPM+SM4=
+github.com/tsingson/errors v0.0.0-20180908030140-d38fee708a13 h1:2FEnSoxyyL6PEjoJ6PgPrrWioR9UsWKRXmH2R2CQfUU=
+github.com/tsingson/errors v0.0.0-20180908030140-d38fee708a13/go.mod h1:uDgmFeqpWJdfb1VzcVQHmbCig/hp6ay2axaOQkNjzdQ=
 github.com/tsingson/phi v0.2.1 h1:ApY12+K6kJOqLay7BOQMrIFT311Rxb4C0N/DW8pk6RI=
 github.com/tsingson/phi v0.2.1/go.mod h1:yNO+67ZX8IjxxjiNN/zWs3cizN8Vuk1TghGE/2UuVZY=
+github.com/tsingson/uuid v3.2.0+incompatible h1:G4abtDqXrq+rozlc8M6xRqWGJX21GmoaKqsI1Vc0g5g=
+github.com/tsingson/uuid v3.2.0+incompatible/go.mod h1:VcfeXh4gu6OIBCdTqK7VT8RBY3/qGVNACanNW0mBEHY=
 github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 h1:EICbibRW4JNKMcY+LsWmuwob+CRS1BmdRdjphAm9mH4=
 github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2/go.mod h1:VFNgLljTbGfSG7qAOspJ7OScBnGdDN/yBr0sguwnwf0=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=

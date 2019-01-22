@@ -14,7 +14,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7 // indirect
 	github.com/gin-gonic/gin v1.3.0
-	github.com/google/uuid v1.1.0
+	github.com/google/uuid v1.1.0 // indirect
 	github.com/guelfey/go.dbus v0.0.0-20131113121618-f6a3a2366cc3 // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.3.0+incompatible
@@ -42,7 +42,9 @@ require (
 	github.com/stretchr/testify v1.3.0
 	github.com/tsingson/btcutil v0.0.0-20181003034133-6de6be366b82
 	github.com/tsingson/chardet v0.0.0-20180515175526-60fc302f5592
+	github.com/tsingson/errors v0.0.0-20180908030140-d38fee708a13
 	github.com/tsingson/phi v0.2.1
+	github.com/tsingson/uuid v3.2.0+incompatible
 	github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0
 	github.com/valyala/fasthttp v1.1.0
