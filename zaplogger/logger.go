@@ -22,11 +22,11 @@ func NewZapLog(path, prefix string, stdoutFlag bool) *zap.Logger {
 	opts := []zap.Option{}
 
 	if stdoutFlag {
-		opts = append(opts, zap.AddCaller())
-		opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
+		// opts = append(opts, zap.AddCaller())
+		// opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
 
 		std := NewStdoutCore(zapcore.DebugLevel)
-		debug := NewZapCore(path, prefix, zapcore.ErrorLevel)
+		debug := NewZapCore(path, prefix, zapcore.InfoLevel)
 
 		return zap.New(zapcore.NewTee(std, debug), opts...)
 	} else {
