@@ -18,30 +18,40 @@ import (
 func FastGet(url string, timeOut time.Duration) (*fasthttp.Response, error) {
 	// init http client
 	client := &fasthttp.Client{}
-	request := fasthttp.AcquireRequest()
-	response := fasthttp.AcquireResponse()
+	req := fasthttp.AcquireRequest()
+	resp := fasthttp.AcquireResponse()
+	defer func() {
+		// 用完需要释放资源
+		fasthttp.ReleaseResponse(resp)
+		fasthttp.ReleaseRequest(req)
+	}()
+	// defer fasthttp.ReleaseRequest(req)
+	// 	defer fasthttp.ReleaseResponse(resp)
 
-	// defer fasthttp.ReleaseRequest(request)
-	// 	defer fasthttp.ReleaseResponse(response)
+	// 	req.SetConnectionClose()
+	req.SetRequestURI(url)
+	req.Header.Add("Accept", "application/json")
 
-	// 	request.SetConnectionClose()
-	request.SetRequestURI(url)
-	request.Header.Add("Accept", "application/json")
-
-	err := client.DoTimeout(request, response, timeOut)
+	err := client.DoTimeout(req, resp, timeOut)
 
 	if err != nil {
 		return nil, err
 	}
-	// 	fmt.Println(string(response.Header.Header()))
-	// 	fmt.Println(string(response.Body()))
+	// 	fmt.Println(string(resp.Header.Header()))
+	// 	fmt.Println(string(resp.Body()))
 
-	return response, nil
+	return resp, nil
 }
 
 // FastPost
 func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Response, error) {
 	req := fasthttp.AcquireRequest()
+	resp := fasthttp.AcquireResponse()
+	defer func() {
+		// 用完需要释放资源
+		fasthttp.ReleaseResponse(resp)
+		fasthttp.ReleaseRequest(req)
+	}()
 	req.SetRequestURI(url)
 	req.Header.SetContentType("application/json; charset=utf-8")
 	// 	req.Header.Add("User-Agent", "Test-Agent")
@@ -54,7 +64,6 @@ func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Respons
 	req.Header.SetMethod("POST")
 	req.SetBody(body)
 
-	resp := fasthttp.AcquireResponse()
 	client := &fasthttp.Client{}
 
 	err := client.DoTimeout(req, resp, timeOut)
@@ -72,6 +81,12 @@ func FastPost(url string, body []byte, timeOut time.Duration) (*fasthttp.Respons
 // PostString
 func FastPostString(url string, body string, timeOut time.Duration) (*fasthttp.Response, error) {
 	req := fasthttp.AcquireRequest()
+	resp := fasthttp.AcquireResponse()
+	defer func() {
+		// 用完需要释放资源
+		fasthttp.ReleaseResponse(resp)
+		fasthttp.ReleaseRequest(req)
+	}()
 	req.SetRequestURI(url)
 	req.Header.SetContentType("application/json; charset=utf-8")
 	req.Header.Add("User-Agent", "Test-Agent")
@@ -80,7 +95,6 @@ func FastPostString(url string, body string, timeOut time.Duration) (*fasthttp.R
 	req.Header.SetMethod("POST")
 	req.SetBodyString(body)
 
-	resp := fasthttp.AcquireResponse()
 	client := &fasthttp.Client{}
 
 	err := client.DoTimeout(req, resp, timeOut)
