@@ -61,7 +61,7 @@ func NewZapCore(path, prefix string, level zapcore.Level) zapcore.Core {
 	var LumberLogger *lumberjack.Logger
 	LumberLogger = &lumberjack.Logger{
 		Filename:   logFilename,
-		MaxSize:    10, // megabytes
+		MaxSize:    100, // megabytes
 		MaxBackups: 31,
 		MaxAge:     31,    // days
 		Compress:   false, // 开发时不压缩
