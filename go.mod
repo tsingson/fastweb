@@ -6,6 +6,7 @@ require (
 	github.com/NetWatcher/service v0.0.0-20170526123706-12236803cddf
 	github.com/bsm/go-guid v1.0.0
 	github.com/btcsuite/btcutil v0.0.0-20180706230648-ab6388e0c60a
+	github.com/cloudfoundry/go-diodes v0.0.0-20180905200951-72629b5276e3 // indirect
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/dgraph-io/badger v1.5.4
 	github.com/dgryski/go-farm v0.0.0-20180109070241-2de33835d102 // indirect

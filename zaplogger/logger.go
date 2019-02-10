@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/rs/zerolog/diode"
+	"github.com/tsingson/fastx/zaplogger/diode"
 	"github.com/spf13/afero"
 	"gopkg.in/natefinch/lumberjack.v2"
 
