@@ -1,3 +1,3 @@
 # fastx
 
-web "famework" base on fasthttp / fasthttprouter
+utitls on fasthttp / fasthttprouter
