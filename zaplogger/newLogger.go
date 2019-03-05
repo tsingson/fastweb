@@ -45,7 +45,7 @@ func newZapConfig(debugLevel bool, te zapcore.TimeEncoder, de zapcore.DurationEn
 }
 
 // NewLogger return a normal logger
-func NewLogger(debugLevel bool) (logger *zap.Logger) {
+func NewZlog(debugLevel bool) (logger *zap.Logger) {
 	loggerConfig := newZapConfig(debugLevel, nil, nil)
 	logger, err := loggerConfig.Build()
 	if err != nil {

@@ -17,7 +17,7 @@ type (
 	}
 )
 
-func FastHttpZeroLogHandler(next phi.HandlerFunc) phi.HandlerFunc {
+func FastHttpZeroLogHandler(next phi.RequestHandlerFunc) phi.RequestHandlerFunc {
 	return func(ctx *fasthttp.RequestCtx) {
 		begin := time.Now()
 		next(ctx)

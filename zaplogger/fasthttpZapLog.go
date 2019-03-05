@@ -26,8 +26,8 @@ func InitZapLogger(log *zap.Logger) *ZapLogger {
 }
 
 // NewZapLogger return ZapLogger with caller field
-func NewZapLogger(debugLevel bool) *ZapLogger {
-	return &ZapLogger{NewLogger(debugLevel).WithOptions(zap.AddCallerSkip(1))}
+func NewZapLogger() *ZapLogger {
+	return &ZapLogger{NewLogger().WithOptions(zap.AddCallerSkip(1))}
 }
 
 // Printf logs a message at level Info on the ZapLogger.
@@ -37,7 +37,7 @@ func (l *ZapLogger) Printf(format string, args ...interface{}) {
 
 // FastHttpZapLogHandler
 // middle-ware for fasthttp
-func (l *ZapLogger) FastHttpZapLogHandler(next phi.HandlerFunc) phi.HandlerFunc {
+func (l *ZapLogger) FastHttpZapLogHandler(next phi.RequestHandlerFunc) phi.RequestHandlerFunc {
 	return func(ctx *fasthttp.RequestCtx) {
 		startTime := time.Now()
 		next(ctx)

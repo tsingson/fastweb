@@ -9,7 +9,7 @@ import (
 )
 
 //  Recoverer(next phi.HandlerFunc) phi.HandlerFunc
-func Recoverer(next phi.HandlerFunc) phi.HandlerFunc {
+func Recoverer(next phi.RequestHandlerFunc) phi.RequestHandlerFunc {
 	fn := func(ctx *fasthttp.RequestCtx) {
 		defer func() {
 			if rvr := recover(); rvr != nil {
@@ -27,9 +27,9 @@ func Recoverer(next phi.HandlerFunc) phi.HandlerFunc {
 				ctx.Error(utils.BytesToStringUnsafe(debug.Stack()), 500)
 			}
 		}()
-		next.ServeFastHTTP(ctx)
+		next.Handler(ctx)
 	}
-	return phi.HandlerFunc(fn)
+	return phi.RequestHandlerFunc(fn)
 }
 
 // design and code by tsingson

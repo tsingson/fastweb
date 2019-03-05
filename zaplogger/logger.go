@@ -6,15 +6,27 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/tsingson/fastx/zaplogger/diode"
 	"github.com/spf13/afero"
+	"go.uber.org/fx"
 	"gopkg.in/natefinch/lumberjack.v2"
+
+	"github.com/rs/zerolog/diode"
 
 	"github.com/tsingson/fastx/utils"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
+
+var Module = fx.Options(
+	fx.Provide(
+		NewLogger),
+)
+
+func NewLogger() *zap.Logger {
+	path, _ := buildLogPath()
+	return NewZapLog(path, "default", false)
+}
 
 // NewZapLog  init a log
 func NewZapLog(path, prefix string, stdoutFlag bool) *zap.Logger {
@@ -25,19 +37,19 @@ func NewZapLog(path, prefix string, stdoutFlag bool) *zap.Logger {
 		// opts = append(opts, zap.AddCaller())
 		// opts = append(opts, zap.AddStacktrace(zap.WarnLevel))
 
-		std := NewStdoutCore(zapcore.DebugLevel)
-		debug := NewZapCore(path, prefix, zapcore.InfoLevel)
+		std := newStdoutCore(zapcore.DebugLevel)
+		debug := newZapCore(path, prefix, zapcore.InfoLevel)
 
 		return zap.New(zapcore.NewTee(std, debug), opts...)
 	} else {
-		errlog := NewZapCore(path, prefix, zapcore.ErrorLevel)
+		errlog := newZapCore(path, prefix, zapcore.ErrorLevel)
 		return zap.New(errlog)
 	}
 
 }
 
 // NewZapLog  initial a zap logger
-func NewZapCore(path, prefix string, level zapcore.Level) zapcore.Core {
+func newZapCore(path, prefix string, level zapcore.Level) zapcore.Core {
 
 	dataTimeFmtInFileName := time.Now().Format("2006-01-02-15")
 	var err error
@@ -76,20 +88,20 @@ func NewZapCore(path, prefix string, level zapcore.Level) zapcore.Core {
 	var w zapcore.WriteSyncer
 	w = zapcore.AddSync(wdiode)
 
-	return newZapCore(true, level, w)
+	return newCore(true, level, w)
 
 }
 
-func NewStdoutCore(level zapcore.Level) zapcore.Core {
+func newStdoutCore(level zapcore.Level) zapcore.Core {
 	var w zapcore.WriteSyncer
 
 	w = zapcore.AddSync(os.Stdout)
 
-	return newZapCore(true, level, w)
+	return newCore(true, level, w)
 }
 
 // newZapLogger
-func newZapCore(jsonFlag bool, level zapcore.Level, output zapcore.WriteSyncer) zapcore.Core {
+func newCore(jsonFlag bool, level zapcore.Level, output zapcore.WriteSyncer) zapcore.Core {
 
 	cfg := zapcore.EncoderConfig{
 		TimeKey:        "logtime",
@@ -115,11 +127,14 @@ func newZapCore(jsonFlag bool, level zapcore.Level, output zapcore.WriteSyncer) 
 }
 
 // buildLogPath
-func buildLogPath(path string) (logPath string, err error) {
-	if len(path) == 0 {
-		path, _ = utils.GetCurrentExecDir()
+func buildLogPath(path ...string) (logPath string, err error) {
+	var p string
+	if len(path[0]) == 0 {
+		p, _ = utils.GetCurrentExecDir()
+	} else {
+		p = path[0]
 	}
-	logPath = path + "/"
+	logPath = p + "/log"
 
 	afs := afero.NewOsFs()
 	check, _ := afero.DirExists(afs, logPath)
@@ -130,7 +145,7 @@ func buildLogPath(path string) (logPath string, err error) {
 		}
 	}
 
-	tf := logPath + "test.log"
+	tf := logPath + "/test.log"
 	err = afero.WriteFile(afs, tf, []byte("file b"), 0644)
 	if err != nil {
 		return "", err
