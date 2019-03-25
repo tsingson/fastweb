@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/spf13/afero"
-	"go.uber.org/fx"
 	"gopkg.in/natefinch/lumberjack.v2"
 
 	"github.com/rs/zerolog/diode"
@@ -18,10 +17,6 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var Module = fx.Options(
-	fx.Provide(
-		NewLogger),
-)
 
 func NewLogger() *zap.Logger {
 	path, _ := buildLogPath()

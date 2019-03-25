@@ -3,13 +3,12 @@ module github.com/tsingson/fastx
 go 1.12
 
 require (
-	code.cloudfoundry.org/go-diodes v0.0.0-20180905200951-72629b5276e3 // indirect
 	github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7 // indirect
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/NetWatcher/service v0.0.0-20170526123706-12236803cddf
+	github.com/Shopify/sarama v1.21.0
 	github.com/bsm/go-guid v1.0.0
 	github.com/btcsuite/btcutil v0.0.0-20190207003914-4c204d697803
-	github.com/cloudfoundry/go-diodes v0.0.0-20180905200951-72629b5276e3
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/dgraph-io/badger v1.5.4
 	github.com/dgryski/go-farm v0.0.0-20190104051053-3adb47b1fb0f // indirect
@@ -55,9 +54,6 @@ require (
 	github.com/valyala/fasthttp v1.2.0
 	github.com/vektra/tachyon v0.0.0-20150921164542-0da4f3861aef // indirect
 	go.uber.org/atomic v1.3.2 // indirect
-	go.uber.org/dig v1.7.0 // indirect
-	go.uber.org/fx v1.9.0
-	go.uber.org/goleak v0.10.0 // indirect
 	go.uber.org/multierr v1.1.0 // indirect
 	go.uber.org/zap v1.9.1
 	golang.org/x/text v0.3.0

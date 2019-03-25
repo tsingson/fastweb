@@ -34,7 +34,6 @@ func DirExists(name string) bool {
 		return false
 	}
 	return b
-
 }
 
 func WriteToFile(c []byte, filename string) error {

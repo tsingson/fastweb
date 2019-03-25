@@ -1,7 +1,6 @@
 package zaplogger
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/tsingson/phi"
@@ -10,30 +9,6 @@ import (
 
 	"github.com/valyala/fasthttp"
 )
-
-// ZapLogger is a logger which compatible to logrus/std zlog/prometheus.
-// it implements Print() Println() Printf() Dbug() Debugln() Debugf() Info() Infoln() Infof() Warn() Warnln() Warnf()
-// Error() Errorln() Errorf() Fatal() Fataln() Fatalf() Panic() Panicln() Panicf() With() WithField() WithFields()
-type ZapLogger struct {
-	Log *zap.Logger
-}
-
-// InitZaplogger
-func InitZapLogger(log *zap.Logger) *ZapLogger {
-	return &ZapLogger{
-		log,
-	}
-}
-
-// NewZapLogger return ZapLogger with caller field
-func NewZapLogger() *ZapLogger {
-	return &ZapLogger{NewLogger().WithOptions(zap.AddCallerSkip(1))}
-}
-
-// Printf logs a message at level Info on the ZapLogger.
-func (l *ZapLogger) Printf(format string, args ...interface{}) {
-	l.Log.Info(fmt.Sprintf(format, args...))
-}
 
 // FastHttpZapLogHandler
 // middle-ware for fasthttp
