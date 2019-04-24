@@ -5,8 +5,9 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/base64"
-	"github.com/tsingson/errors"
 	"io"
+
+	"github.com/pkg/errors"
 )
 
 // 加密

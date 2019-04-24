@@ -17,7 +17,6 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-
 func NewLogger() *zap.Logger {
 	path, _ := buildLogPath()
 	return NewZapLog(path, "default", false)

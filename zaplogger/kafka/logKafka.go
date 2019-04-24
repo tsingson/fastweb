@@ -105,6 +105,6 @@ func InitLogger(mode string, fileName string, maxSize, maxBackups, maxAge int, c
 	core := zapcore.NewTee(allCore...)
 
 	// From a zapcore.Core, it's easy to construct a Logger.
-	return  zap.New(core).WithOptions(zap.AddCaller())
+	return zap.New(core).WithOptions(zap.AddCaller())
 
 }
