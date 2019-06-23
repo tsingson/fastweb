@@ -4,7 +4,6 @@ import (
 	// 	"github.com/json-iterator/go"
 	"bytes"
 	"fmt"
-	"github.com/valyala/fasthttp"
 	"io"
 	"io/ioutil"
 	"log"
@@ -12,6 +11,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/valyala/fasthttp"
 )
 
 // FastGet
